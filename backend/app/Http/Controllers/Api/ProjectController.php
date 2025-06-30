@@ -9,7 +9,6 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        // return Project::with('technology')->get();
         return response()->json(Project::all());
     }
 }
