@@ -3,7 +3,6 @@ import {
   Burger,
   Drawer,
   Group,
-  SimpleGrid,
   Stack,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
