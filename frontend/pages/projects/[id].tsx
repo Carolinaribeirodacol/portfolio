@@ -76,7 +76,7 @@ export default function ProjectDetails() {
               align: "center"
             }}
           >
-            {project.images?.map((image: any, index: number) => (
+            {project.images?.map((image: {image_path: string, caption: string}, index: number) => (
               <Carousel.Slide key={index}>
                 <Image
                   src={`http://localhost:8000/storage/${image.image_path}`}
