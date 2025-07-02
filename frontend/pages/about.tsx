@@ -36,7 +36,6 @@ export default function AboutPage() {
   type Frontend = {
     name: string;
     icon: JSX.Element;
-    color: string;
   };
 
   const technologies: Technology[] = [
