@@ -18,10 +18,20 @@ import { Carousel } from "@mantine/carousel";
 
 import { IconBrandGithub, IconWorld } from "@tabler/icons-react";
 
+type Project = {
+  id: number,
+  title: string,
+  images: [],
+  description: string,
+  status: string,
+  repo_url: string,
+  live_url: string
+}
+
 export default function ProjectDetails() {
   const router = useRouter();
   const { id } = router.query;
-  const [project, setProject] = useState<object|null>(null);
+  const [project, setProject] = useState<Project|null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
