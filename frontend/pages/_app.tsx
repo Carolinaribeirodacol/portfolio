@@ -2,7 +2,8 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { MantineProvider, createTheme, MantineColorsTuple, Container } from '@mantine/core';
 import '@mantine/core/styles.css';
-import { HeaderSearch } from "@/components/HeaderMenu";
+import '@mantine/carousel/styles.css';
+import { HeaderMenu } from "@/components/HeaderMenu";
 
 const purple: MantineColorsTuple = [
   '#f6eeff',
@@ -26,9 +27,9 @@ const theme = createTheme({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme} defaultColorScheme="dark">
-      <HeaderSearch />
+      <HeaderMenu />
 
-      <Container>
+      <Container px="auto">
         <Component {...pageProps} />
       </Container>
     </MantineProvider>

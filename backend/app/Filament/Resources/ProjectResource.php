@@ -3,9 +3,8 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProjectResource\Pages;
-use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Filament\Resources\ProjectResource\RelationManagers\ImagesRelationManager;
 use App\Models\Project;
-use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -16,8 +15,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProjectResource extends Resource
 {
@@ -67,6 +64,15 @@ class ProjectResource extends Resource
                     ->multiple()
                     ->preload()
                     ->searchable()
+                    ->required(),
+                Select::make('status')
+                    ->label('Status')
+                    ->options([
+                        'em andamento' => 'Em andamento',
+                        'concluído' => 'Concluído',
+                        'pausado' => 'Pausado',
+                    ])
+                    ->default('em andamento')
                     ->required()
             ]);
     }
@@ -77,8 +83,10 @@ class ProjectResource extends Resource
             ->columns([
                 TextColumn::make('title')->searchable()->sortable(),
                 TextColumn::make('slug'),
+                TextColumn::make('status'),
                 TextColumn::make('technologies.name')->label('Tecnologias')->limit(2),
-                ImageColumn::make('image')->label('Imagem'),
+                ImageColumn::make('images.image_path')->label('Imagens'),
+                ImageColumn::make('image')->label('Imagem Principal'),
             ])
             ->filters([
                 //
@@ -96,7 +104,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ImagesRelationManager::class,
         ];
     }
 

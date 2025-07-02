@@ -1,17 +1,23 @@
-import { Autocomplete, Burger, Group } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-// import { MantineLogo } from '@mantinex/mantine-logo';
-import classes from './HeaderSearch.module.css';
-import Link from 'next/link';
-import { IconSearch } from '@tabler/icons-react';
+import {
+  Autocomplete,
+  Burger,
+  Drawer,
+  Group,
+  SimpleGrid,
+  Stack,
+} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import classes from "./HeaderSearch.module.css";
+import Link from "next/link";
+import { IconHome, IconSearch } from "@tabler/icons-react";
 
 const links = [
-  { link: '/about', label: 'Sobre' },
-  { link: '/projects', label: 'Projetos' },
+  { link: "/about", label: "Sobre" },
+  { link: "/projects", label: "Projetos" },
 ];
 
-export function HeaderSearch() {
-  const [opened, { toggle }] = useDisclosure(false);
+export function HeaderMenu() {
+  const [opened, { toggle, close }] = useDisclosure(false);
 
   const items = links.map((link) => (
     <Link key={link.label} href={link.link} className={classes.link}>
@@ -24,7 +30,9 @@ export function HeaderSearch() {
       <div className={classes.inner}>
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
-          {/* <MantineLogo size={28} /> */}
+          <Link href="/">
+            <IconHome size={28} />
+          </Link>
         </Group>
 
         <Group>
@@ -36,10 +44,23 @@ export function HeaderSearch() {
             className={classes.search}
             placeholder="Search"
             leftSection={<IconSearch size={16} />}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
+            data={["Linkedin", "Github", "Contato"]}
             visibleFrom="xs"
           />
         </Group>
+
+        <Drawer size="xs" opened={opened} onClose={close} title="Menu">
+          <Autocomplete
+            className={classes.search}
+            placeholder="Search"
+            leftSection={<IconSearch size={16} />}
+            data={["Linkedin", "Github", "Contato"]}
+          />
+
+          <Stack align="center" mt="md">
+            {items}
+          </Stack>
+        </Drawer>
       </div>
     </header>
   );
