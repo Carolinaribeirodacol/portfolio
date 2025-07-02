@@ -21,7 +21,7 @@ import { IconBrandGithub, IconWorld } from "@tabler/icons-react";
 export default function ProjectDetails() {
   const router = useRouter();
   const { id } = router.query;
-  const [project, setProject] = useState<any>(null);
+  const [project, setProject] = useState<object|null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

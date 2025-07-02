@@ -1,7 +1,6 @@
 import { GithubButton } from "@/components/GithubButton";
 import { LinkedinButton } from "@/components/LinkedinButton";
 import {
-  Button,
   Card,
   Grid,
   Group,
@@ -23,10 +22,8 @@ import {
   IconLayoutDashboard,
   IconCircleLetterQ,
   IconBrandSass,
-  IconBrandGithub,
   IconBrandNotion,
   IconBrandFigma,
-  IconBrandLinkedin,
 } from "@tabler/icons-react";
 import { JSX } from "react";
 

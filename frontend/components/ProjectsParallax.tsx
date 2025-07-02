@@ -1,5 +1,5 @@
 import { Parallax } from "@gfazioli/mantine-parallax";
-import { Box, Center, Grid, Paper, Text, Title } from "@mantine/core";
+import { Box, Center, Grid, Paper, Text } from "@mantine/core";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
