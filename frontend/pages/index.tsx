@@ -5,6 +5,7 @@ import {
   Title,
   Space,
   Stack,
+  Center,
 } from "@mantine/core";
 import {
   IconBrandLaravel,
@@ -48,9 +49,9 @@ export default function Home() {
 
       <Space h="xl" />
 
-      <Title order={2} align="center">
-        Principais Tecnologias
-      </Title>
+      <Center>
+        <Title order={2}>Principais Tecnologias</Title>
+      </Center>
 
       <Group justify="center" mt="md">
         <IconBrandLaravel color="red" size={30} />
@@ -61,9 +62,9 @@ export default function Home() {
 
       <Space h="xl" />
 
-      <Title order={2} align="center">
-        Projetos em destaque
-      </Title>
+      <Center>
+        <Title order={2}>Projetos em destaque</Title>
+      </Center>
 
       <ProjectsParallax />
     </>

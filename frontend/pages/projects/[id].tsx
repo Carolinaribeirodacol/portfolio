@@ -13,25 +13,26 @@ import {
   Space,
   Loader,
   Image,
+  Center,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 
 import { IconBrandGithub, IconWorld } from "@tabler/icons-react";
 
 type Project = {
-  id: number,
-  title: string,
-  images: [],
-  description: string,
-  status: string,
-  repo_url: string,
-  live_url: string
-}
+  id: number;
+  title: string;
+  images: [];
+  description: string;
+  status: string;
+  repo_url: string;
+  live_url: string;
+};
 
 export default function ProjectDetails() {
   const router = useRouter();
   const { id } = router.query;
-  const [project, setProject] = useState<Project|null>(null);
+  const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,17 +55,19 @@ export default function ProjectDetails() {
 
   if (!project) {
     return (
-      <Text align="center" mt="xl" color="red">
-        Projeto não encontrado.
-      </Text>
+      <Center mt="xl">
+        <Text color="red">Projeto não encontrado.</Text>
+      </Center>
     );
   }
 
   return (
     <Container size="md">
-      <Title order={2} align="center" mb="md">
-        {project.title}
-      </Title>
+      <Center mb="md">
+        <Title order={2}>
+          {project.title}
+        </Title>
+      </Center>
 
       <Card shadow="md" radius="md" p="lg" withBorder>
         <Card.Section>
@@ -73,20 +76,25 @@ export default function ProjectDetails() {
             emblaOptions={{
               loop: true,
               dragFree: false,
-              align: "center"
+              align: "center",
             }}
           >
-            {project.images?.map((image: {image_path: string, caption: string}, index: number) => (
-              <Carousel.Slide key={index}>
-                <Image
-                  src={`http://localhost:8000/storage/${image.image_path}`}
-                  alt={image.caption}
-                  fallbackSrc="https://placehold.co/600x400?text=Projeto"
-                  fit="cover"
-                  mx="auto"
-                />
-              </Carousel.Slide>
-            ))}
+            {project.images?.map(
+              (
+                image: { image_path: string; caption: string },
+                index: number
+              ) => (
+                <Carousel.Slide key={index}>
+                  <Image
+                    src={`http://localhost:8000/storage/${image.image_path}`}
+                    alt={image.caption}
+                    fallbackSrc="https://placehold.co/600x400?text=Projeto"
+                    fit="cover"
+                    mx="auto"
+                  />
+                </Carousel.Slide>
+              )
+            )}
           </Carousel>
         </Card.Section>
 

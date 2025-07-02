@@ -2,6 +2,7 @@ import { GithubButton } from "@/components/GithubButton";
 import { LinkedinButton } from "@/components/LinkedinButton";
 import {
   Card,
+  Center,
   Grid,
   Group,
   Image,
@@ -41,70 +42,72 @@ export default function AboutPage() {
   const technologies: Technology[] = [
     {
       name: "Laravel",
-      icon: <IconBrandLaravel color="red" size={20} />
+      icon: <IconBrandLaravel color="red" size={20} />,
     },
     {
       name: "Notion",
-      icon: <IconBrandNotion color="white" size={20} />
+      icon: <IconBrandNotion color="white" size={20} />,
     },
     {
       name: "Figma",
-      icon: <IconBrandFigma color="green" size={20} />
+      icon: <IconBrandFigma color="green" size={20} />,
     },
     {
       name: "Github",
-      icon: <IconBrandFigma color="white" size={20} />
+      icon: <IconBrandFigma color="white" size={20} />,
     },
     {
       name: "MySQL",
-      icon: <IconBrandMysql color="grey" size={20} />
+      icon: <IconBrandMysql color="grey" size={20} />,
     },
     {
       name: "Docker",
-      icon: <IconBrandDocker color="blue" size={20} />
+      icon: <IconBrandDocker color="blue" size={20} />,
     },
     {
       name: "RabbitMQ",
-      icon: <IconCarrot color="orange" size={20} />
-    }
+      icon: <IconCarrot color="orange" size={20} />,
+    },
   ];
 
   const frontend: Frontend[] = [
     {
       name: "Vue",
-      icon: <IconBrandVue color="green" size={20} />
+      icon: <IconBrandVue color="green" size={20} />,
     },
     {
       name: "React/Next",
-      icon: <IconBrandReact color="teal" size={20} />
+      icon: <IconBrandReact color="teal" size={20} />,
     },
     {
       name: "Quasar",
-      icon: <IconCircleLetterQ color="purple" size={20} />
+      icon: <IconCircleLetterQ color="purple" size={20} />,
     },
     {
       name: "Mantine",
-      icon: <IconLayoutDashboard color="indigo" size={20} />
+      icon: <IconLayoutDashboard color="indigo" size={20} />,
     },
     {
       name: "Tailwind CSS",
-      icon: <IconBrandTailwind color="teal" size={20} />
+      icon: <IconBrandTailwind color="teal" size={20} />,
     },
     {
       name: "Vuetify",
-      icon: <IconBrandVue color="green" size={20} />
+      icon: <IconBrandVue color="green" size={20} />,
     },
     {
       name: "Sass",
-      icon: <IconBrandSass color="pink" size={20} />
-    }
+      icon: <IconBrandSass color="pink" size={20} />,
+    },
   ];
 
   return (
     <>
-      <Title order={1} align="center" mb="lg">
-        Prazer, Carolina
-      </Title>
+      <Center mb="lg">
+        <Title order={1}>
+          Prazer, Carolina
+        </Title>
+      </Center>
 
       <Group justify="center" mt="sm">
         <GithubButton />
