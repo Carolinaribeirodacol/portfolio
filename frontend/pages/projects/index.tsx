@@ -13,6 +13,7 @@ import {
   AspectRatio,
   Stack,
 } from "@mantine/core";
+import DefaultNoData from "@/components/DefaultNoData";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
@@ -33,6 +34,10 @@ export default function ProjectsPage() {
       <Space h="lg" />
 
       <Grid>
+        {projects.length === 0 && (
+          <DefaultNoData text="Sem projetos disponíveis." />
+        )}
+
         {projects.map(
           (project: {
             id: number;
