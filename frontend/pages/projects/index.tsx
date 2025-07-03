@@ -19,8 +19,10 @@ export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    
     axios
-      .get("http://localhost:8000/api/projects")
+      .get(`${apiUrl}/projects`)
       .then((res) => setProjects(res.data))
       .catch((err) => console.error(err));
   }, []);

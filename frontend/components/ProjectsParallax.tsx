@@ -13,8 +13,10 @@ export function ProjectsParallax() {
   const [projects, setProjects] = useState<Project[]>([]);
 
   useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     axios
-      .get("http://localhost:8000/api/projects")
+      .get(`${apiUrl}/projects`)
       .then((res) => setProjects(res.data))
       .catch((err) => console.error(err));
   }, []);
