@@ -46,6 +46,11 @@ RUN php artisan filament:assets
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Publica assets com overwrite
+RUN php artisan filament:assets --force
+
+RUN mkdir -p public/vendor/filament && php artisan filament:assets --force
+
 # Expondo a porta padrão do Apache
 EXPOSE 80
 

@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: portfolio-backend
+    env: docker
+    dockerfilePath: backend/Dockerfile
+    buildCommand: |
+      npm install
+      npm run build
+      composer install --no-dev --optimize-autoloader
+      php artisan migrate --force
+      php artisan filament:assets
+    startCommand: apache2-foreground
+    envVars:
+      - key: APP_ENV; value: production
+      - key: APP_KEY; secure: true
+      - key: DB_URL; fromDatabase: your-postgres
+      - key: APP_URL; value: https://portfolio-m22s.onrender.com

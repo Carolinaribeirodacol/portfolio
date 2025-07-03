@@ -1,0 +1,7 @@
+  - type: web
+    name: portfolio-frontend
+    env: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL; value: https://seu-dominio-backend/api
