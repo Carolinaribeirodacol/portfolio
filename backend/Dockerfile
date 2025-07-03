@@ -39,9 +39,6 @@ RUN composer install --no-dev --optimize-autoloader
 # Instala dependências do Node.js e compila os assets (ex: Vite)
 RUN npm install && npm run build
 
-# (Opcional) Publica os assets do Filament
-RUN php artisan filament:assets
-
 # Corrige permissões das pastas de cache e logs
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
