@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zlib1g-dev \
     libonig-dev \
+    gnupg \
+    ca-certificates \
     && docker-php-ext-install pdo pdo_pgsql pgsql zip intl mbstring
 
 # Ativa mod_rewrite do Apache (necessário para Laravel)
@@ -23,6 +25,10 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # Instala Composer global
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Instala Node.js (versão LTS recomendada)
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs
+
 # Copia os arquivos do projeto Laravel
 COPY . /var/www/html
 WORKDIR /var/www/html
@@ -30,11 +36,18 @@ WORKDIR /var/www/html
 # Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
 
+# Instala dependências do Node.js e compila os assets (ex: Vite)
+RUN npm install && npm run build
+
+# (Opcional) Publica os assets do Filament
+RUN php artisan filament:assets
+
 # Corrige permissões das pastas de cache e logs
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expõe a porta padrão do Apache
+# Expondo a porta padrão do Apache
 EXPOSE 80
 
-# Executa migrations automaticamente e inicia
+# Comando padrão do container
+CMD ["apache2-foreground"]
