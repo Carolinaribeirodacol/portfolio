@@ -43,7 +43,10 @@ RUN npm install && npm run build
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Publica assets com overwrite
+# Gera a chave de app
+RUN php artisan key:generate --force
+
+# Publica os assets do Filament
 RUN php artisan filament:assets --force
 
 RUN mkdir -p public/vendor/filament && php artisan filament:assets --force
