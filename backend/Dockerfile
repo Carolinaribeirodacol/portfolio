@@ -33,22 +33,30 @@ RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
 COPY . /var/www/html
 WORKDIR /var/www/html
 
+# Copia o .env.example como .env após copiar o projeto
+RUN cp .env.example .env
+
+# Define variáveis para evitar erro de conexão com banco
+ENV APP_ENV=local
+ENV DB_CONNECTION=sqlite
+
 # Instala dependências do Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Instala dependências do Node.js e compila os assets (ex: Vite)
+# Instala dependências do Node.js e compila os assets
 RUN npm install && npm run build
 
-# Corrige permissões das pastas de cache e logs
+# Corrige permissões
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Gera a chave de app
+# Limpa cache de configuração (por segurança)
+RUN php artisan config:clear
+
+# Gera a chave da aplicação
 RUN php artisan key:generate --force
 
 # Publica os assets do Filament
-RUN php artisan filament:assets --force
-
 RUN mkdir -p public/vendor/filament && php artisan filament:assets --force
 
 # Expondo a porta padrão do Apache
