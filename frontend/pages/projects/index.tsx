@@ -42,6 +42,7 @@ export default function ProjectsPage() {
           (project: {
             id: number;
             image: string;
+            image_url: string;
             title: string;
             status: string;
             description: string;
@@ -61,7 +62,7 @@ export default function ProjectsPage() {
                 <Card.Section>
                   <AspectRatio ratio={16 / 9}>
                     <Image
-                      src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${project.image}`}
+                      src={project.image_url}
                       fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                       fit="cover"
                       alt={project.title}
