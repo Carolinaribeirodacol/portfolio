@@ -14,6 +14,12 @@ class TechnologySeeder extends Seeder
     public function run(): void
     {
         $technologies = [
+            'Fillament',
+            'Livewire',
+            'Alpine.js',
+            'Vercel',
+            'DigitalOcean',
+            'AWS',
             'Laravel',
             'PHP',
             'Vue.js',
