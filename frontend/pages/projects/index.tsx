@@ -18,11 +18,9 @@ import DefaultNoData from "@/components/DefaultNoData";
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    
+  useEffect(() => {    
     axios
-      .get(`${apiUrl}/projects`)
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/projects`)
       .then((res) => setProjects(res.data))
       .catch((err) => console.error(err));
   }, []);
@@ -32,6 +30,8 @@ export default function ProjectsPage() {
       <Title order={1} ta="center">
         Projetos
       </Title>
+      {process.env.NEXT_PUBLIC_API_URL}
+      
 
       <Space h="lg" />
 
