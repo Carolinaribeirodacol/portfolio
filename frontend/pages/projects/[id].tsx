@@ -86,7 +86,7 @@ export default function ProjectDetails() {
               ) => (
                 <Carousel.Slide key={index}>
                   <Image
-                    src={`http://localhost:8000/storage/${image.image_path}`}
+                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${image.image_path}`}
                     alt={image.caption}
                     fallbackSrc="https://placehold.co/600x400?text=Projeto"
                     fit="cover"

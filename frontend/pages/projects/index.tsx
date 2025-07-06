@@ -30,8 +30,6 @@ export default function ProjectsPage() {
       <Title order={1} ta="center">
         Projetos
       </Title>
-      {process.env.NEXT_PUBLIC_API_URL}
-      
 
       <Space h="lg" />
 
@@ -63,7 +61,7 @@ export default function ProjectsPage() {
                 <Card.Section>
                   <AspectRatio ratio={16 / 9}>
                     <Image
-                      src={`http://localhost:8000/storage/${project.image}`}
+                      src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${project.image}`}
                       fallbackSrc="https://placehold.co/600x400?text=Placeholder"
                       fit="cover"
                       alt={project.title}
