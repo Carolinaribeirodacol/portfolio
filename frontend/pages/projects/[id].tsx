@@ -13,16 +13,25 @@ import {
   Loader,
   Image,
   Center,
+  Tooltip,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 
 import { IconBrandGithub, IconWorld } from "@tabler/icons-react";
 import { getProjectById } from "@/lib/laravel";
+import { iconMap } from "@/lib/iconMap";
 
 type Project = {
   id: number;
   title: string;
   images: [];
+  technologies: [
+    {
+      id: number;
+      name: string;
+      icon: string;
+    }
+  ];
   description: string;
   status: string;
   repo_url: string;
@@ -40,7 +49,7 @@ export default function ProjectDetails() {
     if (!id) return;
 
     setLoading(true);
-    
+
     getProjectById(Number(id))
       .then(setProject)
       .catch(console.error)
@@ -66,9 +75,7 @@ export default function ProjectDetails() {
   return (
     <Container size="md">
       <Center mb="md">
-        <Title order={2}>
-          {project.title}
-        </Title>
+        <Title order={2}>{project.title}</Title>
       </Center>
 
       <Card shadow="md" radius="md" p="lg" withBorder>
@@ -111,6 +118,25 @@ export default function ProjectDetails() {
           <Text size="sm" color="dimmed">
             {project.description}
           </Text>
+
+          <Title order={2}>Tecnologias utilizadas</Title>
+          <Group>
+            {project.technologies.map(({ name, icon }) => {
+              const Icon = iconMap[icon];
+
+              return Icon ? (
+                <Tooltip key={name} label={name} withArrow>
+                  <span>
+                    <Icon size={40} color="gray" />
+                  </span>
+                </Tooltip>
+              ) : (
+                <Badge key={name} color="gray">
+                  {name}
+                </Badge>
+              );
+            })}
+          </Group>
 
           <Group mt="md" gap="sm">
             {project.repo_url && (
