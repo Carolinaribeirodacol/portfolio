@@ -28,7 +28,7 @@ export default function Home() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     axios
-      .get(`${apiUrl}/projects?status=em_andamento`)
+      .get(`${apiUrl}/projects?status=em andamento`)
       .then((res) => setProjects(res.data))
       .catch((err) => console.error(err));
   }, []);
