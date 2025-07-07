@@ -4,17 +4,26 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
     /**
      * Retorna todos os projetos.
      *
+     * @param Request $request
      * @return \App\Models\Project
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Project::all());
+        $status = $request->query('status');
+        $query = Project::query();
+
+        if ($status) {
+            $query->where('status', $status);
+        }
+
+        return response()->json($query->get());
     }
 
     /**

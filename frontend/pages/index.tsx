@@ -1,12 +1,4 @@
-import {
-  Text,
-  Button,
-  Group,
-  Title,
-  Space,
-  Stack,
-  Center,
-} from "@mantine/core";
+import { Text, Button, Group, Title, Space, Stack } from "@mantine/core";
 import {
   IconBrandLaravel,
   IconBrandMysql,
@@ -20,7 +12,27 @@ import "@gfazioli/mantine-parallax/styles.css";
 import "@gfazioli/mantine-parallax/styles.layer.css";
 import { Parallax } from "@gfazioli/mantine-parallax";
 
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+type Project = {
+  id: number;
+  title: string;
+  description: string;
+};
+
 export default function Home() {
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    axios
+      .get(`${apiUrl}/projects?status=em_andamento`)
+      .then((res) => setProjects(res.data))
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <>
       <Stack align="center" mt="xl">
@@ -32,41 +44,40 @@ export default function Home() {
           </Text>
         </Parallax>
 
-        <Group justify="center" mt="md">
-          <GithubButton />
+        <Group>
+          <GithubButton size="md" />
 
-          <LinkedinButton />
+          <LinkedinButton size="md" />
+        </Group>
 
-          <Button component="a" color="purple" href="/projects">
+        <Space h="md" />
+
+        <Title order={2}>Visite as páginas, fiz com carinho</Title>
+        <Group>
+          <Button size="md" component="a" color="purple" href="/projects">
             Ver Projetos
           </Button>
 
-          <Button variant="outline" color="purple" component="a" href="/about">
+          <Button size="md" variant="outline" color="purple" component="a" href="/about">
             Sobre mim
           </Button>
         </Group>
-      </Stack>
 
-      <Space h="xl" />
+        <Space h="md" />
 
-      <Center>
         <Title order={2}>Principais Tecnologias</Title>
-      </Center>
+        <Group>
+          <IconBrandLaravel color="red" size={40} />
+          <IconBrandVue color="green" size={40} />
+          <IconBrandReact color="teal" size={40} />
+          <IconBrandMysql color="grey" size={40} />
+        </Group>
 
-      <Group justify="center" mt="md">
-        <IconBrandLaravel color="red" size={30} />
-        <IconBrandVue color="green" size={30} />
-        <IconBrandReact color="teal" size={30} />
-        <IconBrandMysql color="grey" size={30} />
-      </Group>
+        <Space h="md" />
 
-      <Space h="xl" />
-
-      <Center>
-        <Title order={2}>Projetos em destaque</Title>
-      </Center>
-
-      <ProjectsParallax />
+        <Title order={2}>Projetos em andamento</Title>
+        <ProjectsParallax projects={projects} />
+      </Stack>
     </>
   );
 }

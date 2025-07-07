@@ -1,11 +1,16 @@
 import { Button } from "@mantine/core";
 import { IconBrandLinkedin } from "@tabler/icons-react";
 
-export function LinkedinButton() {
+interface SizeType {
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+}
+
+export function LinkedinButton({ size = "sm" }: SizeType) {
   return (
     <Button
       component="a"
       href="https://www.linkedin.com/in/carolina-ribeiro-28852910b/"
+      size={size}
       target="_blank"
       rel="noopener noreferrer"
       variant="light"
