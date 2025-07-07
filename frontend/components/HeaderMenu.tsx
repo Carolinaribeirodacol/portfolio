@@ -39,22 +39,22 @@ export function HeaderMenu() {
             {items}
           </Group>
 
-          <Autocomplete
+          {/* <Autocomplete
             className={classes.search}
             placeholder="Search"
             leftSection={<IconSearch size={16} />}
             data={["Linkedin", "Github", "Contato"]}
             visibleFrom="xs"
-          />
+          /> */}
         </Group>
 
         <Drawer size="xs" opened={opened} onClose={close} title="Menu">
-          <Autocomplete
+          {/* <Autocomplete
             className={classes.search}
             placeholder="Search"
             leftSection={<IconSearch size={16} />}
             data={["Linkedin", "Github", "Contato"]}
-          />
+          /> */}
 
           <Stack align="center" mt="md">
             {items}
