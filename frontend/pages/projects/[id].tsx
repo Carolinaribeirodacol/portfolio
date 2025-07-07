@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import {
   Card,
   Text,
@@ -18,6 +17,7 @@ import {
 import { Carousel } from "@mantine/carousel";
 
 import { IconBrandGithub, IconWorld } from "@tabler/icons-react";
+import { getProjectById } from "@/lib/laravel";
 
 type Project = {
   id: number;
@@ -32,23 +32,25 @@ type Project = {
 export default function ProjectDetails() {
   const router = useRouter();
   const { id } = router.query;
+
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!id) return;
 
-    axios
-      .get(`http://localhost:8000/api/projects/${id}`)
-      .then((res) => setProject(res.data))
-      .catch((err) => console.error(err))
+    setLoading(true);
+    
+    getProjectById(Number(id))
+      .then(setProject)
+      .catch(console.error)
       .finally(() => setLoading(false));
   }, [id]);
 
   if (loading) {
     return (
       <Group justify="center" mt="xl">
-        <Loader color="purple" />
+        <Loader color="purple">Carregando...</Loader>
       </Group>
     );
   }
@@ -56,7 +58,7 @@ export default function ProjectDetails() {
   if (!project) {
     return (
       <Center mt="xl">
-        <Text color="red">Projeto não encontrado.</Text>
+        <Text>Projeto não encontrado.</Text>
       </Center>
     );
   }

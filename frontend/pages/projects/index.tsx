@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import {
   Card,
@@ -12,18 +11,40 @@ import {
   Badge,
   AspectRatio,
   Stack,
+  Loader,
+  Center,
 } from "@mantine/core";
 import DefaultNoData from "@/components/DefaultNoData";
+import { getProjects } from "@/lib/laravel";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {    
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/projects`)
-      .then((res) => setProjects(res.data))
-      .catch((err) => console.error(err));
+  useEffect(() => {
+    setLoading(true);
+
+    getProjects()
+      .then(setProjects)
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <Group justify="center" mt="xl">
+        <Loader color="purple">Carregando...</Loader>
+      </Group>
+    );
+  }
+
+  if (!projects) {
+    return (
+      <Center mt="xl">
+        <Text>Nenhum projeto a ser exibido.</Text>
+      </Center>
+    );
+  }
 
   return (
     <>
