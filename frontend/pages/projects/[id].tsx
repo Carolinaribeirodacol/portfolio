@@ -83,12 +83,12 @@ export default function ProjectDetails() {
           >
             {project.images?.map(
               (
-                image: { image_path: string; caption: string },
+                image: { image_url: string; caption: string },
                 index: number
               ) => (
                 <Carousel.Slide key={index}>
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_API_URL}/storage/${image.image_path}`}
+                    src={image.image_url}
                     alt={image.caption}
                     fallbackSrc="https://placehold.co/600x400?text=Projeto"
                     fit="cover"
