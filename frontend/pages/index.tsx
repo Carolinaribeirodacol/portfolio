@@ -14,6 +14,7 @@ import { Parallax } from "@gfazioli/mantine-parallax";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 type Project = {
   id: number;
@@ -23,6 +24,7 @@ type Project = {
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -44,7 +46,7 @@ export default function Home() {
           </Text>
         </Parallax>
 
-        <Group>
+        <Group justify="center">
           <GithubButton size="md" />
 
           <LinkedinButton size="md" />
@@ -52,20 +54,21 @@ export default function Home() {
 
         <Space h="md" />
 
-        <Title order={2}>Visite as páginas, fiz com carinho</Title>
-        <Group>
-          <Button size="md" component="a" color="purple" href="/projects">
-            Ver Projetos
+        <Title order={2} ta="center">Visite as páginas, fiz com carinho</Title>
+
+        <Group justify="center">
+          <Button size="md" color="purple" onClick={() => router.push("/projects")}>
+            Projetos
           </Button>
 
-          <Button size="md" variant="outline" color="purple" component="a" href="/about">
+          <Button size="md" variant="outline" color="purple" onClick={() => router.push("/about")}>
             Sobre mim
           </Button>
         </Group>
 
         <Space h="md" />
 
-        <Title order={2}>Principais Tecnologias</Title>
+        <Title order={2} ta="center">Principais Tecnologias</Title>
         <Group>
           <IconBrandLaravel color="red" size={40} />
           <IconBrandVue color="green" size={40} />
@@ -75,7 +78,7 @@ export default function Home() {
 
         <Space h="md" />
 
-        <Title order={2}>Projetos em andamento</Title>
+        <Title order={2} ta="center">Projetos em andamento</Title>
         <ProjectsParallax projects={projects} />
       </Stack>
     </>

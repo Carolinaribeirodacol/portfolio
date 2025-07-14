@@ -1,5 +1,4 @@
 import {
-  Autocomplete,
   Burger,
   Drawer,
   Group,
@@ -8,7 +7,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderSearch.module.css";
 import Link from "next/link";
-import { IconHome, IconSearch } from "@tabler/icons-react";
+import { IconHome } from "@tabler/icons-react";
 
 const links = [
   { link: "/about", label: "Sobre" },
@@ -19,7 +18,7 @@ export function HeaderMenu() {
   const [opened, { toggle, close }] = useDisclosure(false);
 
   const items = links.map((link) => (
-    <Link key={link.label} href={link.link} className={classes.link}>
+    <Link key={link.label} href={link.link} className={classes.link} onClick={close}>
       {link.label}
     </Link>
   ));

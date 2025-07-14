@@ -14,10 +14,17 @@ import {
   Image,
   Center,
   Tooltip,
+  useMantineTheme,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
+import { useMediaQuery } from '@mantine/hooks';
 
-import { IconBook, IconBrandGithub, IconPuzzle, IconWorld } from "@tabler/icons-react";
+import {
+  IconBook,
+  IconBrandGithub,
+  IconPuzzle,
+  IconWorld,
+} from "@tabler/icons-react";
 import { getProjectById } from "@/lib/laravel";
 import { iconMap } from "@/lib/iconMap";
 
@@ -42,6 +49,8 @@ type Project = {
 export default function ProjectDetails() {
   const router = useRouter();
   const { id } = router.query;
+  const theme = useMantineTheme();
+  const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
 
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -82,7 +91,7 @@ export default function ProjectDetails() {
       <Card shadow="md" radius="md" p="lg" withBorder>
         <Card.Section>
           <Carousel
-            height={400}
+            height={mobile ? 140 : 400}
             emblaOptions={{
               loop: true,
               dragFree: false,
@@ -169,7 +178,7 @@ export default function ProjectDetails() {
                 Ver projeto
               </Button>
             )}
-            
+
             {project.reference_url && (
               <Button
                 component="a"

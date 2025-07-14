@@ -4,7 +4,6 @@ import {
   Image,
   Text,
   Grid,
-  Button,
   Group,
   Title,
   Space,
@@ -75,6 +74,8 @@ export default function ProjectsPage() {
               padding="md"
               radius="md"
               withBorder
+              component="a"
+              href={`/projects/${project.id}` || "#"}
               style={{
                 height: "100%",
                 display: "flex",
@@ -111,18 +112,6 @@ export default function ProjectsPage() {
                 <Text size="sm" c="dimmed" lineClamp={3}>
                   {project.description}
                 </Text>
-
-                <Button
-                  component="a"
-                  href={`/projects/${project.id}` || "#"}
-                  color="purple"
-                  mt="auto"
-                  radius="md"
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  Ver detalhes
-                </Button>
               </Stack>
             </Card>
           </Grid.Col>
