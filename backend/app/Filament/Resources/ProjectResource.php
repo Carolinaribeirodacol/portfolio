@@ -52,6 +52,11 @@ class ProjectResource extends Resource
                     ->url()
                     ->maxLength(255)
                     ->nullable(),
+                TextInput::make('reference_url')
+                    ->label('Link do curso/referência')
+                    ->url()
+                    ->maxLength(255)
+                    ->nullable(),
                 FileUpload::make('image')
                     ->label('Imagem principal')
                     ->image()

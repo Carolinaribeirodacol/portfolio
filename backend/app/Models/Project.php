@@ -19,6 +19,7 @@ class Project extends Model
         'description',
         'repo_url',
         'live_url',
+        'reference_url',
         'image',
         'status'
     ];
