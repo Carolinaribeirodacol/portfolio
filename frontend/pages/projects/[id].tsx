@@ -169,7 +169,7 @@ export default function ProjectDetails() {
                 Ver projeto
               </Button>
             )}
-
+            
             {project.reference_url && (
               <Button
                 component="a"

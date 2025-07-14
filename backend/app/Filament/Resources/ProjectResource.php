@@ -53,7 +53,7 @@ class ProjectResource extends Resource
                     ->maxLength(255)
                     ->nullable(),
                 TextInput::make('reference_url')
-                    ->label('Link do curso/referência')
+                    ->label('Referência')
                     ->url()
                     ->maxLength(255)
                     ->nullable(),
