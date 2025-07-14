@@ -17,7 +17,7 @@ import {
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 
-import { IconBrandGithub, IconPuzzle, IconWorld } from "@tabler/icons-react";
+import { IconBook, IconBrandGithub, IconPuzzle, IconWorld } from "@tabler/icons-react";
 import { getProjectById } from "@/lib/laravel";
 import { iconMap } from "@/lib/iconMap";
 
@@ -36,6 +36,7 @@ type Project = {
   status: string;
   repo_url: string;
   live_url: string;
+  reference_url: string;
 };
 
 export default function ProjectDetails() {
@@ -165,7 +166,21 @@ export default function ProjectDetails() {
                 color="blue"
                 variant="light"
               >
-                Acessar projeto
+                Ver projeto
+              </Button>
+            )}
+
+            {project.reference_url && (
+              <Button
+                component="a"
+                href={project.reference_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                leftSection={<IconBook size={18} />}
+                color="purple"
+                variant="light"
+              >
+                Ver referência
               </Button>
             )}
           </Group>
