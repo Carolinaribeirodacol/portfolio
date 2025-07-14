@@ -135,13 +135,13 @@ export default function ProjectDetails() {
               const Icon = iconMap[icon];
 
               return Icon ? (
-                <Tooltip key={name} label={name} withArrow>
+                <Tooltip color="purple" key={name} label={name} withArrow>
                   <span>
                     <Icon size={30} color="white" />
                   </span>
                 </Tooltip>
               ) : (
-                <Tooltip key={name} label={name} withArrow>
+                <Tooltip color="purple" key={name} label={name} withArrow>
                   <span>
                     <IconPuzzle size={30} color="white" />
                   </span>

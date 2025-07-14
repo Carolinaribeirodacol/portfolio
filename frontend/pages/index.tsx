@@ -1,4 +1,12 @@
-import { Text, Button, Group, Title, Space, Stack } from "@mantine/core";
+import {
+  Text,
+  Button,
+  Group,
+  Title,
+  Space,
+  Stack,
+  Tooltip,
+} from "@mantine/core";
 import {
   IconBrandLaravel,
   IconBrandMysql,
@@ -54,31 +62,57 @@ export default function Home() {
 
         <Space h="md" />
 
-        <Title order={2} ta="center">Visite as páginas, fiz com carinho</Title>
+        <Title order={2} ta="center">
+          Visite as páginas, fiz com carinho
+        </Title>
 
         <Group justify="center">
-          <Button size="md" color="purple" onClick={() => router.push("/projects")}>
+          <Button
+            size="md"
+            color="purple"
+            onClick={() => router.push("/projects")}
+          >
             Projetos
           </Button>
 
-          <Button size="md" variant="outline" color="purple" onClick={() => router.push("/about")}>
+          <Button
+            size="md"
+            variant="outline"
+            color="purple"
+            onClick={() => router.push("/about")}
+          >
             Sobre mim
           </Button>
         </Group>
 
         <Space h="md" />
 
-        <Title order={2} ta="center">Principais Tecnologias</Title>
+        <Title order={2} ta="center">
+          Principais Tecnologias
+        </Title>
         <Group>
-          <IconBrandLaravel color="red" size={40} />
-          <IconBrandVue color="green" size={40} />
-          <IconBrandReact color="teal" size={40} />
-          <IconBrandMysql color="grey" size={40} />
+          <Tooltip color="purple" key="laravel" label="Laravel" withArrow>
+            <IconBrandLaravel color="red" size={40} />
+          </Tooltip>
+
+          <Tooltip color="purple" key="vue" label="Vue" withArrow>
+            <IconBrandVue color="green" size={40} />
+          </Tooltip>
+
+          <Tooltip color="purple" key="react" label="React" withArrow>
+            <IconBrandReact color="teal" size={40} />
+          </Tooltip>
+
+          <Tooltip color="purple" key="mysql" label="Mysql" withArrow>
+            <IconBrandMysql color="grey" size={40} />
+          </Tooltip>
         </Group>
 
         <Space h="md" />
 
-        <Title order={2} ta="center">Projetos em andamento</Title>
+        <Title order={2} ta="center">
+          Projetos em andamento
+        </Title>
         <ProjectsParallax projects={projects} />
       </Stack>
     </>
