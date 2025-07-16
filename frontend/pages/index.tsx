@@ -1,11 +1,4 @@
-import {
-  Text,
-  Button,
-  Group,
-  Title,
-  Space,
-  Stack,
-} from "@mantine/core";
+import { Text, Button, Group, Title, Space, Stack } from "@mantine/core";
 import {
   IconBrandLaravel,
   IconBrandMysql,
@@ -19,9 +12,10 @@ import "@gfazioli/mantine-parallax/styles.css";
 import "@gfazioli/mantine-parallax/styles.layer.css";
 import { Parallax } from "@gfazioli/mantine-parallax";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/router";
+import { getProjectsByStatus } from "@/lib/laravel";
+import { GetStaticProps } from "next";
+import { PageLoader } from "@/components/PageLoader";
 
 type Project = {
   id: number;
@@ -29,17 +23,38 @@ type Project = {
   description: string;
 };
 
-export default function Home() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const router = useRouter();
-  useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+type HomeProps = {
+  projects: Project[];
+};
 
-    axios
-      .get(`${apiUrl}/projects?status=em andamento`)
-      .then((res) => setProjects(res.data))
-      .catch((err) => console.error(err));
-  }, []);
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
+  try {
+    const projects = await getProjectsByStatus("em andamento");
+
+    return {
+      props: {
+        projects,
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar projetos:", error);
+
+    return {
+      props: {
+        projects: [],
+      },
+      revalidate: 60,
+    };
+  }
+};
+
+export default function Home({ projects }: HomeProps) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <PageLoader message="Carregando..." />;
+  }
 
   return (
     <>

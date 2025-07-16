@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Card,
   Image,
@@ -10,11 +9,13 @@ import {
   Badge,
   AspectRatio,
   Stack,
-  Loader,
   Center,
 } from "@mantine/core";
 import DefaultNoData from "@/components/DefaultNoData";
 import { getProjects } from "@/lib/laravel";
+import { GetStaticProps } from "next";
+import { PageLoader } from "@/components/PageLoader";
+import { useRouter } from "next/router";
 
 type Project = {
   id: number;
@@ -25,25 +26,35 @@ type Project = {
   description: string;
 };
 
-export default function ProjectsPage() {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(false);
+type ProjectProps = {
+  projects: Project[];
+}
 
-  useEffect(() => {
-    setLoading(true);
+export const getStaticProps: GetStaticProps<ProjectProps> = async () => {
+  try {
+    const projects = await getProjects();
+    return {
+      props: {
+        projects,
+      },
+      revalidate: 60,
+    };
+  } catch (error) {
+    console.error("Erro ao buscar projetos:", error);
+    return {
+      props: {
+        projects: [],
+      },
+      revalidate: 60,
+    };
+  }
+}
 
-    getProjects()
-      .then(setProjects)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, []);
+export default function ProjectsPage({projects}: ProjectProps) {
+  const router = useRouter();
 
-  if (loading) {
-    return (
-      <Group justify="center" mt="xl">
-        <Loader color="purple">Carregando...</Loader>
-      </Group>
-    );
+  if (router.isFallback) {
+    return <PageLoader message="Carregando projetos..." />;
   }
 
   if (!projects) {

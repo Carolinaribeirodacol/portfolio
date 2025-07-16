@@ -25,8 +25,10 @@ import {
   IconBrandSass,
   IconBrandNotion,
   IconBrandFigma,
+  IconBrandGithub,
 } from "@tabler/icons-react";
-import { JSX } from "react";
+import { JSX, useMemo } from "react";
+import NextImage from "next/image";
 
 export default function AboutPage() {
   type Technology = {
@@ -39,74 +41,78 @@ export default function AboutPage() {
     icon: JSX.Element;
   };
 
-  const technologies: Technology[] = [
-    {
-      name: "Laravel",
-      icon: <IconBrandLaravel color="red" size={20} stroke={1} />,
-    },
-    {
-      name: "Notion",
-      icon: <IconBrandNotion color="white" size={20} stroke={1} />,
-    },
-    {
-      name: "Figma",
-      icon: <IconBrandFigma color="green" size={20} stroke={1} />,
-    },
-    {
-      name: "Github",
-      icon: <IconBrandFigma color="white" size={20} stroke={1} />,
-    },
-    {
-      name: "MySQL",
-      icon: <IconBrandMysql color="grey" size={20} stroke={1} />,
-    },
-    {
-      name: "Docker",
-      icon: <IconBrandDocker color="blue" size={20} stroke={1} />,
-    },
-    {
-      name: "RabbitMQ",
-      icon: <IconCarrot color="orange" size={20} stroke={1} />,
-    },
-  ];
+  const technologies: Technology[] = useMemo(
+    () => [
+      {
+        name: "Laravel",
+        icon: <IconBrandLaravel color="red" size={20} stroke={1} />,
+      },
+      {
+        name: "Notion",
+        icon: <IconBrandNotion color="white" size={20} stroke={1} />,
+      },
+      {
+        name: "Figma",
+        icon: <IconBrandFigma color="green" size={20} stroke={1} />,
+      },
+      {
+        name: "Github",
+        icon: <IconBrandGithub color="white" size={20} stroke={1} />,
+      },
+      {
+        name: "MySQL",
+        icon: <IconBrandMysql color="grey" size={20} stroke={1} />,
+      },
+      {
+        name: "Docker",
+        icon: <IconBrandDocker color="blue" size={20} stroke={1} />,
+      },
+      {
+        name: "RabbitMQ",
+        icon: <IconCarrot color="orange" size={20} stroke={1} />,
+      },
+    ],
+    []
+  );
 
-  const frontend: Frontend[] = [
-    {
-      name: "Vue",
-      icon: <IconBrandVue color="green" size={20} stroke={1} />,
-    },
-    {
-      name: "React/Next",
-      icon: <IconBrandReact color="teal" size={20} stroke={1} />,
-    },
-    {
-      name: "Quasar",
-      icon: <IconCircleLetterQ color="purple" size={20} stroke={1} />,
-    },
-    {
-      name: "Mantine",
-      icon: <IconLayoutDashboard color="indigo" size={20} stroke={1} />,
-    },
-    {
-      name: "Tailwind CSS",
-      icon: <IconBrandTailwind color="teal" size={20} stroke={1} />,
-    },
-    {
-      name: "Vuetify",
-      icon: <IconBrandVue color="green" size={20} stroke={1} />,
-    },
-    {
-      name: "Sass",
-      icon: <IconBrandSass color="pink" size={20} stroke={1} />,
-    },
-  ];
+  const frontend: Frontend[] = useMemo(
+    () => [
+      {
+        name: "Vue",
+        icon: <IconBrandVue color="green" size={20} stroke={1} />,
+      },
+      {
+        name: "React/Next",
+        icon: <IconBrandReact color="teal" size={20} stroke={1} />,
+      },
+      {
+        name: "Quasar",
+        icon: <IconCircleLetterQ color="purple" size={20} stroke={1} />,
+      },
+      {
+        name: "Mantine",
+        icon: <IconLayoutDashboard color="indigo" size={20} stroke={1} />,
+      },
+      {
+        name: "Tailwind CSS",
+        icon: <IconBrandTailwind color="teal" size={20} stroke={1} />,
+      },
+      {
+        name: "Vuetify",
+        icon: <IconBrandVue color="green" size={20} stroke={1} />,
+      },
+      {
+        name: "Sass",
+        icon: <IconBrandSass color="pink" size={20} stroke={1} />,
+      },
+    ],
+    []
+  );
 
   return (
     <>
       <Center mb="lg">
-        <Title order={1}>
-          Prazer, Carolina
-        </Title>
+        <Title order={1}>Prazer, Carolina</Title>
       </Center>
 
       <Group justify="center" mt="sm">
@@ -120,29 +126,30 @@ export default function AboutPage() {
       <Card shadow="md" radius="md" p="lg" withBorder mb="lg">
         <Grid gutter="lg" align="center">
           <Grid.Col span={{ base: 12, sm: 3 }}>
-            <Image
-              radius="md"
+            <NextImage
               src="/images/profile.jpg"
               alt="Foto de Perfil"
-              h={200}
-              w="auto"
+              width={300}
+              height={200}
+              style={{ borderRadius: "8px" }}
             />
           </Grid.Col>
 
           <Grid.Col span={{ base: 12, sm: 9 }}>
             <Text size="sm" fw={400}>
-              Tenho 27 anos e estou sempre buscando aprender algo novo.
-              Sou formada em <b>Análise e Desenvolvimento de Sistemas</b> e
-              tenho uma <b>pós-graduação em Jogos Digitais</b>.
-              <br /><br />
-
-              Possuo experiência com desenvolvimento de <b>aplicações web</b> em Vue e Laravel. 
-              Mas já realizei projetos em React, Nuxt, Next, Quasar, Tailwind, Vuetify, entre outros.
-              <br /><br />
-
-              Gosto de jogar, desenhar, ler, assistir animes e sou apaixonada por gatos.
-              Além disso, crio vídeos para o YouTube sobre jogos e desenho, e
-              faço lives na Twitch.
+              Tenho 27 anos e estou sempre buscando aprender algo novo. Sou
+              formada em <b>Análise e Desenvolvimento de Sistemas</b> e tenho
+              uma <b>pós-graduação em Jogos Digitais</b>.
+              <br />
+              <br />
+              Possuo experiência com desenvolvimento de <b>aplicações web</b> em
+              Vue e Laravel. Mas já realizei projetos em React, Nuxt, Next,
+              Quasar, Tailwind, Vuetify, entre outros.
+              <br />
+              <br />
+              Gosto de jogar, desenhar, ler, assistir animes e sou apaixonada
+              por gatos. Além disso, crio vídeos para o YouTube sobre jogos e
+              desenho, e faço lives na Twitch.
             </Text>
           </Grid.Col>
         </Grid>
@@ -234,75 +241,26 @@ export default function AboutPage() {
         <Title order={4}>Plataformas de estudo</Title>
 
         <SimpleGrid cols={{ base: 1, sm: 3, md: 5 }} spacing="xs" mt="sm">
-          <Group gap="xs">
-            <Image
-              radius="md"
-              src="/images/duolingo.svg"
-              alt="Logo Duolingo"
-              h={20}
-              w={20}
-              fit="contain"
-            />
-            <Text size="sm" fw={500}>
-              Duolingo
-            </Text>
-          </Group>
-
-          <Group gap="xs">
-            <Image
-              radius="md"
-              src="/images/especializati.png"
-              alt="Logo EspecializaTi"
-              h={20}
-              w={20}
-              fit="contain"
-            />
-            <Text size="sm" fw={500}>
-              EspecializaTi
-            </Text>
-          </Group>
-
-          <Group gap="xs">
-            <Image
-              radius="md"
-              src="/images/hello-talk.png"
-              alt="Logo HelloTalk"
-              h={20}
-              w={20}
-              fit="contain"
-            />
-            <Text size="sm" fw={500}>
-              HelloTalk
-            </Text>
-          </Group>
-
-          <Group gap="xs">
-            <Image
-              radius="md"
-              src="/images/freecodecamp.jpg"
-              alt="Logo FreeCodeCamp"
-              h={20}
-              w={20}
-              fit="contain"
-            />
-            <Text size="sm" fw={500}>
-              FreeCodeCamp
-            </Text>
-          </Group>
-
-          <Group gap="xs">
-            <Image
-              radius="md"
-              src="/images/rocketset.png"
-              alt="Logo Rocketset"
-              h={20}
-              w={20}
-              fit="contain"
-            />
-            <Text size="sm" fw={500}>
-              Rocketset
-            </Text>
-          </Group>
+          {[
+            "duolingo.svg",
+            "especializati.png",
+            "hello-talk.png",
+            "freecodecamp.jpg",
+            "rocketset.png",
+          ].map((img, index) => (
+            <Group key={index} gap="xs">
+              <NextImage
+                src={`/images/${img}`}
+                alt={`Logo ${img}`}
+                width={20}
+                height={20}
+                style={{ objectFit: "contain" }}
+              />
+              <Text size="sm" fw={500}>
+                {img.split(".")[0]}
+              </Text>
+            </Group>
+          ))}
         </SimpleGrid>
       </Card>
 

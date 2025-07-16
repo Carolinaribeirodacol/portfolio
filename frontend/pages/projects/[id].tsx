@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   Card,
   Text,
@@ -10,7 +10,6 @@ import {
   Button,
   Container,
   Space,
-  Loader,
   Image,
   Center,
   Tooltip,
@@ -27,26 +26,16 @@ import {
   IconPuzzle,
   IconWorld,
 } from "@tabler/icons-react";
-import { getProjectById } from "@/lib/laravel";
+import { getProjectById, getProjects } from "@/lib/laravel";
 import { iconMap } from "@/lib/iconMap";
 import { DefaultModal } from "@/components/DefaultModal";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { PageLoader } from "@/components/PageLoader";
 
-type Project = {
+type Technology = {
   id: number;
-  title: string;
-  images: [];
-  technologies: [
-    {
-      id: number;
-      name: string;
-      icon: string;
-    }
-  ];
-  description: string;
-  status: string;
-  repo_url: string;
-  live_url: string;
-  reference_url: string;
+  name: string;
+  icon: string;
 };
 
 type ImageProps = {
@@ -54,35 +43,57 @@ type ImageProps = {
   caption: string;
 };
 
-export default function ProjectDetails() {
+type Props = {
+  project: Project;
+};
+
+type Project = {
+  id: number;
+  title: string;
+  images: ImageProps[];
+  technologies: Technology[];
+  description: string;
+  status: string;
+  repo_url: string;
+  live_url: string;
+  reference_url: string;
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const projects = await getProjects();
+  const paths = projects.map((project: { id: number }) => ({
+    params: { id: String(project.id) },
+  }));
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  try {
+    const project = await getProjectById(Number(params?.id));
+    return {
+      props: { project },
+      revalidate: 60,
+    };
+  } catch {
+    return { notFound: true };
+  }
+};
+
+export default function ProjectDetails({ project }: Props) {
   const router = useRouter();
-  const { id } = router.query;
   const theme = useMantineTheme();
   const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
   const [opened, { open, close }] = useDisclosure(false);
 
-  const [project, setProject] = useState<Project | null>(null);
-  const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<ImageProps | null>(null);
 
-  useEffect(() => {
-    if (!id) return;
-
-    setLoading(true);
-
-    getProjectById(Number(id))
-      .then(setProject)
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [id]);
-
-  if (loading) {
-    return (
-      <Group justify="center" mt="xl">
-        <Loader color="purple">Carregando...</Loader>
-      </Group>
-    );
-  }
+  if (router.isFallback) {
+      return <PageLoader message="Carregando..." />;
+    }
 
   if (!project) {
     return (
@@ -94,33 +105,27 @@ export default function ProjectDetails() {
 
   return (
     <Container size="md">
-      {mobile ? (
-        <Group justify="space-between" align="center" mb="md">
-          <ActionIcon
-            variant="outline"
-            color="white"
-            radius="xl"
-            aria-label="Settings"
-            size="md"
-            onClick={() => router.push("/projects")}
-          >
-            <IconArrowLeft stroke={1.5} />
-          </ActionIcon>
+      <Group justify="space-between" align="center" mb="md">
+        <ActionIcon
+          variant="outline"
+          color="white"
+          radius="xl"
+          aria-label="Settings"
+          size="md"
+          onClick={() => router.push("/projects")}
+        >
+          <IconArrowLeft stroke={1.5} />
+        </ActionIcon>
 
-          <Title
-            order={2}
-            size="md"
-            textWrap="wrap"
-            style={{ flex: 1, textAlign: "center" }}
-          >
-            {project.title}
-          </Title>
-        </Group>
-      ) : (
-        <Center mb="md">
-          <Title order={2}>{project.title}</Title>
-        </Center>
-      )}
+        <Title
+          order={2}
+          size="md"
+          textWrap="wrap"
+          style={{ flex: 1, textAlign: "center" }}
+        >
+          {project.title}
+        </Title>
+      </Group>
 
       <Card shadow="md" radius="md" p="lg" withBorder>
         <Card.Section>
@@ -132,6 +137,7 @@ export default function ProjectDetails() {
           >
             {selectedImage && (
               <Image
+                loading="lazy"
                 src={selectedImage.image_url}
                 alt={selectedImage.caption}
                 fallbackSrc="https://placehold.co/600x400?text=Projeto"
