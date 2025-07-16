@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ProjectController extends Controller
 {
@@ -17,13 +18,20 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $status = $request->query('status');
-        $query = Project::query();
+        $query = Project::with(['images', 'technologies']);
 
         if ($status) {
             $query->where('status', $status);
         }
 
-        return response()->json($query->get());
+        $cacheKey = $status ? "projects_status_{$status}" : "projects_all";
+
+        $projects = Cache::remember($cacheKey, 60, function () use ($query) {
+            return $query->get();
+        });
+
+
+        return response()->json($projects);
     }
 
     /**
