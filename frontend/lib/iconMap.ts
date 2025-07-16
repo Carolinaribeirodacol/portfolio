@@ -24,7 +24,7 @@ import {
   IconCloud
 } from '@tabler/icons-react';
 
-export const iconMap: Record<string, React.FC<{ size?: number; color?: string }>> = {
+export const iconMap: Record<string, React.FC<{ size?: number; color?: string; stroke?: number }>> = {
   laravel: IconBrandLaravel,
   php: IconBrandPhp,
   vue: IconBrandVue,

@@ -42,62 +42,62 @@ export default function AboutPage() {
   const technologies: Technology[] = [
     {
       name: "Laravel",
-      icon: <IconBrandLaravel color="red" size={20} />,
+      icon: <IconBrandLaravel color="red" size={20} stroke={1} />,
     },
     {
       name: "Notion",
-      icon: <IconBrandNotion color="white" size={20} />,
+      icon: <IconBrandNotion color="white" size={20} stroke={1} />,
     },
     {
       name: "Figma",
-      icon: <IconBrandFigma color="green" size={20} />,
+      icon: <IconBrandFigma color="green" size={20} stroke={1} />,
     },
     {
       name: "Github",
-      icon: <IconBrandFigma color="white" size={20} />,
+      icon: <IconBrandFigma color="white" size={20} stroke={1} />,
     },
     {
       name: "MySQL",
-      icon: <IconBrandMysql color="grey" size={20} />,
+      icon: <IconBrandMysql color="grey" size={20} stroke={1} />,
     },
     {
       name: "Docker",
-      icon: <IconBrandDocker color="blue" size={20} />,
+      icon: <IconBrandDocker color="blue" size={20} stroke={1} />,
     },
     {
       name: "RabbitMQ",
-      icon: <IconCarrot color="orange" size={20} />,
+      icon: <IconCarrot color="orange" size={20} stroke={1} />,
     },
   ];
 
   const frontend: Frontend[] = [
     {
       name: "Vue",
-      icon: <IconBrandVue color="green" size={20} />,
+      icon: <IconBrandVue color="green" size={20} stroke={1} />,
     },
     {
       name: "React/Next",
-      icon: <IconBrandReact color="teal" size={20} />,
+      icon: <IconBrandReact color="teal" size={20} stroke={1} />,
     },
     {
       name: "Quasar",
-      icon: <IconCircleLetterQ color="purple" size={20} />,
+      icon: <IconCircleLetterQ color="purple" size={20} stroke={1} />,
     },
     {
       name: "Mantine",
-      icon: <IconLayoutDashboard color="indigo" size={20} />,
+      icon: <IconLayoutDashboard color="indigo" size={20} stroke={1} />,
     },
     {
       name: "Tailwind CSS",
-      icon: <IconBrandTailwind color="teal" size={20} />,
+      icon: <IconBrandTailwind color="teal" size={20} stroke={1} />,
     },
     {
       name: "Vuetify",
-      icon: <IconBrandVue color="green" size={20} />,
+      icon: <IconBrandVue color="green" size={20} stroke={1} />,
     },
     {
       name: "Sass",
-      icon: <IconBrandSass color="pink" size={20} />,
+      icon: <IconBrandSass color="pink" size={20} stroke={1} />,
     },
   ];
 
@@ -131,17 +131,16 @@ export default function AboutPage() {
 
           <Grid.Col span={{ base: 12, sm: 9 }}>
             <Text size="sm" fw={400}>
-              Tenho 27 anos e estou sempre buscando aprender algo novo. Gosto de
-              jogar, desenhar, ler, assistir animes e sou apaixonada por gatos.
-              Também curto música clássica, rock, pop e metal.
-              <br />
-              <br />
+              Tenho 27 anos e estou sempre buscando aprender algo novo.
               Sou formada em <b>Análise e Desenvolvimento de Sistemas</b> e
-              tenho uma <b>pós-graduação em Jogos Digitais</b>. Atualmente,
-              estou desenvolvendo um jogo em pixel art com o meu namorado, que
-              reúne minha paixão por arte e programação.
-              <br />
-              <br />
+              tenho uma <b>pós-graduação em Jogos Digitais</b>.
+              <br /><br />
+
+              Possuo experiência com desenvolvimento de <b>aplicações web</b> em Vue e Laravel. 
+              Mas já realizei projetos em React, Nuxt, Next, Quasar, Tailwind, Vuetify, entre outros.
+              <br /><br />
+
+              Gosto de jogar, desenhar, ler, assistir animes e sou apaixonada por gatos.
               Além disso, crio vídeos para o YouTube sobre jogos e desenho, e
               faço lives na Twitch.
             </Text>

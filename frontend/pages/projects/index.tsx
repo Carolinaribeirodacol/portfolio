@@ -104,7 +104,7 @@ export default function ProjectsPage() {
                     {project.title}
                   </Text>
 
-                  <Badge color="blue" variant="light">
+                  <Badge color={project.status == "em andamento" ? "blue" : "green"} variant="light">
                     {project.status}
                   </Badge>
                 </Group>

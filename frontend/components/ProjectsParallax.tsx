@@ -1,5 +1,6 @@
 import { Parallax } from "@gfazioli/mantine-parallax";
 import { Box, Center, Grid, Paper, Text } from "@mantine/core";
+import { useRouter } from "next/router";
 
 type Project = {
   id: number;
@@ -12,6 +13,8 @@ type ProjectsParallaxProps = {
 };
 
 export function ProjectsParallax({ projects }: ProjectsParallaxProps) {
+  const router = useRouter();
+
   return (
     <Grid gutter="sm" align="center">
       {projects.map((project, index: number) => (
@@ -28,6 +31,8 @@ export function ProjectsParallax({ projects }: ProjectsParallaxProps) {
               contentParallax
               contentParallaxDistance={0.6}
               p={24}
+              onClick={() => router.push(`/projects/${project.id}`)}
+              style={{ cursor: "pointer" }}
             >
               <Box
                 w="100%"

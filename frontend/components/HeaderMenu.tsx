@@ -3,6 +3,7 @@ import {
   Drawer,
   Group,
   Stack,
+  Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import classes from "./HeaderSearch.module.css";
@@ -29,7 +30,10 @@ export function HeaderMenu() {
         <Group>
           <Burger opened={opened} onClick={toggle} size="sm" hiddenFrom="sm" />
           <Link href="/">
-            <IconHome size={28} />
+            <Group gap={6}>
+              <IconHome size={28} />
+              <Text>Início</Text>
+            </Group>
           </Link>
         </Group>
 

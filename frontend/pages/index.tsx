@@ -5,7 +5,6 @@ import {
   Title,
   Space,
   Stack,
-  Tooltip,
 } from "@mantine/core";
 import {
   IconBrandLaravel,
@@ -33,7 +32,6 @@ type Project = {
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const router = useRouter();
-
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -49,8 +47,7 @@ export default function Home() {
         <Parallax align="center">
           <Title order={1}>Oi! Eu sou a Carolina 👋</Title>
           <Text size="lg" maw={600}>
-            Desenvolvedora full stack com foco em Laravel, Vue e React. Gosto de
-            criar experiências visuais, apps funcionais e jogos em pixel art.
+            Desenvolvedora Full Stack com foco em desenvolvimento web
           </Text>
         </Parallax>
 
@@ -63,7 +60,7 @@ export default function Home() {
         <Space h="md" />
 
         <Title order={2} ta="center">
-          Visite as páginas, fiz com carinho
+          Visite as minhas páginas
         </Title>
 
         <Group justify="center">
@@ -90,22 +87,35 @@ export default function Home() {
         <Title order={2} ta="center">
           Principais Tecnologias
         </Title>
-        <Group>
-          <Tooltip color="purple" key="laravel" label="Laravel" withArrow>
-            <IconBrandLaravel color="red" size={40} />
-          </Tooltip>
 
-          <Tooltip color="purple" key="vue" label="Vue" withArrow>
-            <IconBrandVue color="green" size={40} />
-          </Tooltip>
+        <Group gap="lg" wrap="wrap">
+          <Stack align="center" gap={4}>
+            <IconBrandLaravel color="red" size={40} stroke={1} />
+            <Text size="xs" c="white">
+              Laravel
+            </Text>
+          </Stack>
 
-          <Tooltip color="purple" key="react" label="React" withArrow>
-            <IconBrandReact color="teal" size={40} />
-          </Tooltip>
+          <Stack align="center" gap={4}>
+            <IconBrandVue color="green" size={40} stroke={1} />
+            <Text size="xs" c="white">
+              Vue
+            </Text>
+          </Stack>
 
-          <Tooltip color="purple" key="mysql" label="Mysql" withArrow>
-            <IconBrandMysql color="grey" size={40} />
-          </Tooltip>
+          <Stack align="center" gap={4}>
+            <IconBrandReact color="teal" size={40} stroke={1} />
+            <Text size="xs" c="white">
+              React
+            </Text>
+          </Stack>
+
+          <Stack align="center" gap={4}>
+            <IconBrandMysql color="grey" size={40} stroke={1} />
+            <Text size="xs" c="white">
+              MySQL
+            </Text>
+          </Stack>
         </Group>
 
         <Space h="md" />
