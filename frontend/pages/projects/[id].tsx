@@ -189,6 +189,7 @@ export default function ProjectDetails({ project }: Props) {
           </Text>
 
           <Title order={4}>Tecnologias utilizadas</Title>
+          
           <Group>
             {project.technologies.map(({ name, icon }) => {
               const Icon = iconMap[icon] || IconPuzzle;

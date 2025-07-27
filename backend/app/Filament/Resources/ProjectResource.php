@@ -30,13 +30,15 @@ class ProjectResource extends Resource
                     ->label('Título')
                     ->required()
                     ->maxLength(255)
-                    ->placeholder('Projeto 01'),
+                    ->placeholder('Projeto 01')
+                    ->live(onBlur: true),
                 TextInput::make('slug')
                     ->label('Slug')
                     ->dehydrated()
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->slugify('title'),
                 Textarea::make('description')
                     ->label('Descrição')
                     ->rows(4)

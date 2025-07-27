@@ -43,6 +43,8 @@ class TechnologySeeder extends Seeder
             ['name' => 'Git', 'icon' => 'git'],
             ['name' => 'Figma', 'icon' => 'figma'],
             ['name' => 'Inertia.js', 'icon' => 'inertia'],
+            ['name' => 'Sanctum', 'icon' => 'sanctum'],
+            ['name' => 'Pinia', 'icon' => 'pinia'],
         ];
 
         foreach ($technologies as $tech) {
