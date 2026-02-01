@@ -37,8 +37,8 @@ class ProjectResource extends Resource
                     ->dehydrated()
                     ->required()
                     ->unique(ignoreRecord: true)
-                    ->maxLength(255)
-                    ->slugify('title'),
+                    ->maxLength(255),
+                    // ->slugify('title'),
                 Textarea::make('description')
                     ->label('Descrição')
                     ->rows(4)
