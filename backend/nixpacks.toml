@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["php", "phpPackages.composer"]
+
+[start]
+cmd = "php -d upload_max_filesize=20M -d post_max_size=25M artisan serve --host=0.0.0.0 --port=$PORT"
