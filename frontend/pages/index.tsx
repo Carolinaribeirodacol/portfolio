@@ -1,7 +1,7 @@
 import { Text, Button, Group, Title, Space, Stack } from "@mantine/core";
 import {
   IconBrandLaravel,
-  IconBrandMysql,
+  IconBrandNuxt,
   IconBrandReact,
   IconBrandVue,
 } from "@tabler/icons-react";
@@ -105,16 +105,16 @@ export default function Home({ projects }: HomeProps) {
 
         <Group gap="lg" wrap="wrap">
           <Stack align="center" gap={4}>
-            <IconBrandLaravel color="red" size={40} stroke={1} />
+            <IconBrandVue color="green" size={40} stroke={1} />
             <Text size="xs" c="white">
-              Laravel
+              Vue
             </Text>
           </Stack>
 
           <Stack align="center" gap={4}>
-            <IconBrandVue color="green" size={40} stroke={1} />
+            <IconBrandNuxt color="green" size={40} stroke={1} />
             <Text size="xs" c="white">
-              Vue
+              Nuxt
             </Text>
           </Stack>
 
@@ -126,9 +126,9 @@ export default function Home({ projects }: HomeProps) {
           </Stack>
 
           <Stack align="center" gap={4}>
-            <IconBrandMysql color="grey" size={40} stroke={1} />
+            <IconBrandLaravel color="red" size={40} stroke={1} />
             <Text size="xs" c="white">
-              MySQL
+              Laravel
             </Text>
           </Stack>
         </Group>

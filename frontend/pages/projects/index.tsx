@@ -16,18 +16,10 @@ import { getProjects } from "@/lib/laravel";
 import { GetStaticProps } from "next";
 import { PageLoader } from "@/components/PageLoader";
 import { useRouter } from "next/router";
-
-type Project = {
-  id: number;
-  image: string;
-  image_url: string;
-  title: string;
-  status: string;
-  description: string;
-};
+import { Projects } from "@/types/projects";
 
 type ProjectProps = {
-  projects: Project[];
+  projects: Projects[];
 }
 
 export const getStaticProps: GetStaticProps<ProjectProps> = async () => {
@@ -78,7 +70,7 @@ export default function ProjectsPage({projects}: ProjectProps) {
           <DefaultNoData text="Sem projetos disponíveis." />
         )}
 
-        {projects.map((project: Project) => (
+        {projects.map((project: Projects) => (
           <Grid.Col span={{ base: 12, sm: 6 }} key={project.id}>
             <Card
               shadow="sm"

@@ -1,15 +1,10 @@
+import { Projects } from "@/types/projects";
 import { Parallax } from "@gfazioli/mantine-parallax";
-import { Box, Center, Grid, Paper, Text } from "@mantine/core";
+import { Box, Center, Grid, Image, Paper, Text } from "@mantine/core";
 import { useRouter } from "next/router";
 
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-};
-
 type ProjectsParallaxProps = {
-  projects: Project[];
+  projects: Projects[];
 };
 
 export function ProjectsParallax({ projects }: ProjectsParallaxProps) {
@@ -48,6 +43,15 @@ export function ProjectsParallax({ projects }: ProjectsParallaxProps) {
                 }}
               />
               <Paper w="100%" h={300} bg="dark" radius={16} p={36}>
+                <Image
+                    w="100%"
+                    h={100}
+                    src={project.image_url}
+                    fallbackSrc="https://placehold.co/600x400?text=Placeholder"
+                    fit="cover"
+                    alt={project.title}
+                />
+
                 <Text fw={700} c="white" ta="center" size="xl">
                   {project.title}
                 </Text>
