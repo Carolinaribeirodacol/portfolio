@@ -16,15 +16,10 @@ import { useRouter } from "next/router";
 import { getProjectsByStatus } from "@/lib/laravel";
 import { GetStaticProps } from "next";
 import { PageLoader } from "@/components/PageLoader";
-
-type Project = {
-  id: number;
-  title: string;
-  description: string;
-};
+import { Projects } from "@/types/projects";
 
 type HomeProps = {
-  projects: Project[];
+  projects: Projects[];
 };
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
