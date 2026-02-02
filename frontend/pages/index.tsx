@@ -138,6 +138,7 @@ export default function Home({ projects }: HomeProps) {
         <Title order={2} ta="center">
           Projetos em andamento
         </Title>
+        
         <ProjectsParallax projects={projects} />
       </Stack>
     </>

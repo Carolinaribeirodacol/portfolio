@@ -18,7 +18,10 @@ export function ProjectsParallax({ projects }: ProjectsParallaxProps) {
   return (
     <Grid gutter="sm" align="center">
       {projects.map((project, index: number) => (
-        <Grid.Col key={index} span={{ base: 12, sm: 6 }}>
+        <Grid.Col
+          key={index}
+          span={{ base: 12, sm: projects.length > 1 ? 6 : 12 }}
+        >
           <Center w="100%" h="auto">
             <Parallax
               perspective={800}
