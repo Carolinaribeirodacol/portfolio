@@ -4,6 +4,7 @@ import { MantineProvider, createTheme, MantineColorsTuple, Container } from '@ma
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import { HeaderMenu } from "@/components/HeaderMenu";
+import Script from "next/script";
 
 const purple: MantineColorsTuple = [
   '#f6eeff',
@@ -26,6 +27,19 @@ const theme = createTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
+    <>
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-3CZ1D32L6X"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-3CZ1D32L6X');
+        `}
+      </Script>
     <MantineProvider theme={theme} defaultColorScheme="dark">
       <HeaderMenu />
 
@@ -33,5 +47,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </Container>
     </MantineProvider>
+    </>
   );
 }

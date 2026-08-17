@@ -46,6 +46,7 @@ class TechnologySeeder extends Seeder
             ['name' => 'Sanctum', 'icon' => 'sanctum'],
             ['name' => 'Pinia', 'icon' => 'pinia'],
             ['name' => 'Nuxt', 'icon' => 'nuxt'],
+            ['name' => 'Supabase', 'icon' => 'supabase']
         ];
 
         foreach ($technologies as $tech) {
