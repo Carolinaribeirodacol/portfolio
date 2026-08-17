@@ -1,4 +1,5 @@
 import { Text, Button, Group, Title, Space, Stack } from "@mantine/core";
+import Head from "next/head";
 import {
   IconBrandLaravel,
   IconBrandNuxt,
@@ -53,11 +54,15 @@ export default function Home({ projects }: HomeProps) {
 
   return (
     <>
+      <Head>
+        <title>Carolina | Portfólio</title>
+      </Head>
+
       <Stack align="center" mt="xl">
         <Parallax align="center">
           <Title order={1}>Oi! Eu sou a Carolina 👋</Title>
           <Text size="lg" maw={600}>
-            Desenvolvedora Full Stack com foco em desenvolvimento web
+            Desenvolvedora Full Stack · Atuando como Front-end
           </Text>
         </Parallax>
 
@@ -70,7 +75,7 @@ export default function Home({ projects }: HomeProps) {
         <Space h="md" />
 
         <Title order={2} ta="center">
-          Visite as minhas páginas
+          Explore o meu trabalho
         </Title>
 
         <Group justify="center">
@@ -101,28 +106,28 @@ export default function Home({ projects }: HomeProps) {
         <Group gap="lg" wrap="wrap">
           <Stack align="center" gap={4}>
             <IconBrandVue color="green" size={40} stroke={1} />
-            <Text size="xs" c="white">
+            <Text size="xs" c="dimmed">
               Vue
             </Text>
           </Stack>
 
           <Stack align="center" gap={4}>
             <IconBrandNuxt color="green" size={40} stroke={1} />
-            <Text size="xs" c="white">
+            <Text size="xs" c="dimmed">
               Nuxt
             </Text>
           </Stack>
 
           <Stack align="center" gap={4}>
             <IconBrandReact color="teal" size={40} stroke={1} />
-            <Text size="xs" c="white">
+            <Text size="xs" c="dimmed">
               React
             </Text>
           </Stack>
 
           <Stack align="center" gap={4}>
             <IconBrandLaravel color="red" size={40} stroke={1} />
-            <Text size="xs" c="white">
+            <Text size="xs" c="dimmed">
               Laravel
             </Text>
           </Stack>

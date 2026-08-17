@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { GithubButton } from "@/components/GithubButton";
 import { LinkedinButton } from "@/components/LinkedinButton";
 import {
@@ -26,6 +27,7 @@ import {
   IconBrandNotion,
   IconBrandFigma,
   IconBrandGithub,
+  IconComponents,
 } from "@tabler/icons-react";
 import { JSX, useMemo } from "react";
 import NextImage from "next/image";
@@ -49,7 +51,7 @@ export default function AboutPage() {
       },
       {
         name: "Notion",
-        icon: <IconBrandNotion color="white" size={20} stroke={1} />,
+        icon: <IconBrandNotion size={20} stroke={1} />,
       },
       {
         name: "Figma",
@@ -57,7 +59,7 @@ export default function AboutPage() {
       },
       {
         name: "Github",
-        icon: <IconBrandGithub color="white" size={20} stroke={1} />,
+        icon: <IconBrandGithub size={20} stroke={1} />,
       },
       {
         name: "MySQL",
@@ -99,7 +101,7 @@ export default function AboutPage() {
       },
       {
         name: "Vuetify",
-        icon: <IconBrandVue color="green" size={20} stroke={1} />,
+        icon: <IconComponents color="#1867C0" size={20} stroke={1} />,
       },
       {
         name: "Sass",
@@ -111,8 +113,15 @@ export default function AboutPage() {
 
   return (
     <>
+      <Head>
+        <title>Sobre | Carolina</title>
+      </Head>
+
       <Center mb="lg">
-        <Title order={1}>Prazer, Carolina</Title>
+        <Stack align="center" gap={4}>
+          <Title order={1}>Carolina</Title>
+          <Text c="dimmed">Desenvolvedora Full Stack · Atuando como Front-end</Text>
+        </Stack>
       </Center>
 
       <Group justify="center" mt="sm">
@@ -137,18 +146,20 @@ export default function AboutPage() {
 
           <Grid.Col span={{ base: 12, sm: 9 }}>
             <Text size="sm" fw={400}>
-              Tenho 27 anos e estou sempre buscando aprender algo novo. Sou
-              formada em <b>Análise e Desenvolvimento de Sistemas</b> e tenho
-              uma <b>pós-graduação em Jogos Digitais</b>.
+              Estou sempre buscando aprender algo novo. Sou formada em{" "}
+              <b>Análise e Desenvolvimento de Sistemas</b> e tenho uma{" "}
+              <b>pós-graduação em Jogos Digitais</b>.
               <br />
               <br />
-              Possuo experiência com desenvolvimento de <b>aplicações web</b> em
-              Vue e Laravel. Mas já realizei projetos em React, Nuxt, Next,
-              Quasar, Tailwind, Vuetify, entre outros.
+              Possuo <b>mais de 5 anos de experiência</b> no desenvolvimento de
+              aplicações web, atualmente atuando como desenvolvedora{" "}
+              <b>Front-end</b>. Trabalho principalmente com Vue e Laravel, mas já
+              desenvolvi projetos com React, Nuxt, Next, Quasar, Tailwind,
+              Vuetify, entre outros.
               <br />
               <br />
               Gosto de jogar, desenhar, ler, assistir animes e sou apaixonada
-              por gatos. Além disso, crio vídeos para o YouTube sobre jogos e
+              por gatos. Também crio conteúdo para o YouTube sobre jogos e
               desenho, e faço lives na Twitch.
             </Text>
           </Grid.Col>
@@ -195,11 +206,16 @@ export default function AboutPage() {
         <Card shadow="sm" padding="lg" radius="md" withBorder>
           <Title order={4}>Formação Acadêmica</Title>
 
-          <Text size="xs" mt="sm">
-            Superior Tecnólogo - Fatec Ribeirão Preto
-          </Text>
-
-          <Text>Análise e Desenvolvimento de Sistemas</Text>
+          <Stack gap="xs" mt="sm">
+            <div>
+              <Text size="sm" fw={600}>Análise e Desenvolvimento de Sistemas</Text>
+              <Text size="xs" c="dimmed">Superior Tecnólogo · Fatec Ribeirão Preto</Text>
+            </div>
+            <div>
+              <Text size="sm" fw={600}>Jogos Digitais</Text>
+              <Text size="xs" c="dimmed">Pós-graduação</Text>
+            </div>
+          </Stack>
         </Card>
       </SimpleGrid>
 
@@ -242,22 +258,22 @@ export default function AboutPage() {
 
         <SimpleGrid cols={{ base: 1, sm: 3, md: 5 }} spacing="xs" mt="sm">
           {[
-            "duolingo.svg",
-            "especializati.png",
-            "hello-talk.png",
-            "freecodecamp.jpg",
-            "rocketset.png",
-          ].map((img, index) => (
+            { file: "duolingo.svg", label: "Duolingo" },
+            { file: "especializati.png", label: "Especializa TI" },
+            { file: "hello-talk.png", label: "HelloTalk" },
+            { file: "freecodecamp.jpg", label: "freeCodeCamp" },
+            { file: "rocketset.png", label: "Rocketseat" },
+          ].map(({ file, label }, index) => (
             <Group key={index} gap="xs">
               <NextImage
-                src={`/images/${img}`}
-                alt={`Logo ${img}`}
+                src={`/images/${file}`}
+                alt={`Logo ${label}`}
                 width={20}
                 height={20}
                 style={{ objectFit: "contain" }}
               />
               <Text size="sm" fw={500}>
-                {img.split(".")[0]}
+                {label}
               </Text>
             </Group>
           ))}
