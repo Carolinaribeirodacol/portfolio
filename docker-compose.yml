@@ -1,0 +1,85 @@
+# Local development / testing only — `docker compose up` to run the whole
+# stack on this machine before pushing.
+#
+# This is NOT what Coolify deploys. On Coolify, `backend/Dockerfile` and
+# `frontend/Dockerfile` are each their own resource (Dockerfile buildpack,
+# like rukado-web), built and deployed independently, against whatever
+# database/storage Coolify provides. This file only exists to reproduce that
+# locally with a throwaway MySQL container.
+#
+# First run:
+#   1. cp backend/.env.production.example backend/.env, fill in DB_* to match
+#      below (host: db, database/user/password: portfolio), and set APP_KEY —
+#      generate one with: docker run --rm composer:2 php -r "echo 'base64:'.base64_encode(random_bytes(32));"
+#   2. docker compose up -d --build db backend
+#      (migrations + storage:link run automatically on boot, via the
+#      serversideup image's AUTORUN — no manual `artisan migrate` needed)
+#   3. docker compose up --build frontend
+
+services:
+  db:
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: portfolio
+      MYSQL_PASSWORD: portfolio
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8080:8080"
+    volumes:
+      - backend-storage:/var/www/html/storage/app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080/up"]
+      interval: 10s
+      timeout: 5s
+      start_period: 30s
+      retries: 5
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # Prerenders every page at build time by calling the backend's API (see
+  # lib/laravel.ts), so the `backend` service above must already be up and
+  # healthy (migrated) before you build this one — `depends_on` only orders
+  # container start, not the build step. Run `docker compose up -d --build
+  # db backend` first and wait for it to report healthy, then
+  # `docker compose up --build frontend`.
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      # Plain `docker build` runs in an isolated network and can't reach the
+      # `backend` container by service name. `network: host` puts the build
+      # stage on the host's network instead, where backend's published
+      # "8080:8080" port is reachable as localhost:8080. (A custom compose
+      # network name doesn't work here — the default buildkit driver only
+      # accepts host/none/default for build.network.)
+      network: host
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080/api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_healthy
+
+volumes:
+  db-data:
+  backend-storage:
