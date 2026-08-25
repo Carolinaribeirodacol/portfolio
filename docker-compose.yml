@@ -3,9 +3,9 @@
 #
 # This is NOT what Coolify deploys. On Coolify, `backend/Dockerfile` and
 # `frontend/Dockerfile` are each their own resource (Dockerfile buildpack,
-# like rukado-web), built and deployed independently, against whatever
-# database/storage Coolify provides. This file only exists to reproduce that
-# locally with a throwaway MySQL container.
+# like rukado-web), built and deployed independently, against a Postgres
+# resource Coolify manages. This file only exists to reproduce that locally
+# with a throwaway Postgres container.
 #
 # First run:
 #   1. cp backend/.env.production.example backend/.env, fill in DB_* to match
@@ -18,17 +18,16 @@
 
 services:
   db:
-    image: mysql:8
+    image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: portfolio
-      MYSQL_USER: portfolio
-      MYSQL_PASSWORD: portfolio
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: portfolio
+      POSTGRES_USER: portfolio
+      POSTGRES_PASSWORD: portfolio
     volumes:
-      - db-data:/var/lib/mysql
+      - db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d portfolio"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -42,6 +41,9 @@ services:
       - ./backend/.env
     ports:
       - "8080:8080"
+    # Same volume Coolify's "Storages" tab should mount at storage/app in
+    # production — see .env.production.example. Without it, FILESYSTEM_DISK=local
+    # uploads vanish on every redeploy.
     volumes:
       - backend-storage:/var/www/html/storage/app
     healthcheck:

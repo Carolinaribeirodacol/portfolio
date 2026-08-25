@@ -41,7 +41,7 @@ RUN npm run build
 FROM serversideup/php:8.5-fpm-nginx AS deploy
 
 USER root
-RUN install-php-extensions bcmath gd intl zip pcntl exif
+RUN install-php-extensions bcmath gd intl zip pcntl exif pdo_pgsql
 USER www-data
 
 COPY --chown=www-data:www-data . /var/www/html
