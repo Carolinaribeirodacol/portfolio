@@ -26,9 +26,15 @@ class Project extends Model
 
     public function getImageUrlAttribute(): ?string
     {
-        return $this->image
-            ?  config('app.url') . Storage::url($this->image)
-            : null;
+        if (! $this->image) {
+            return null;
+        }
+
+        $url = Storage::url($this->image);
+
+        return str_starts_with($url, 'http://') || str_starts_with($url, 'https://')
+            ? $url
+            : config('app.url') . $url;
     }
 
     public function technologies()
