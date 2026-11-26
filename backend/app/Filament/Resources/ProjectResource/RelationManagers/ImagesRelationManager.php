@@ -5,7 +5,7 @@ namespace App\Filament\Resources\ProjectResource\RelationManagers;
 use Filament\Forms;
 use Filament\Tables;
 use Filament\Resources\RelationManagers\RelationManager;
-use Filament\Forms\Components\FileUpload;
+use App\Filament\Forms\Components\SecureImageUpload;
 use Filament\Tables\Columns\ImageColumn;
 
 class ImagesRelationManager extends RelationManager
@@ -16,10 +16,8 @@ class ImagesRelationManager extends RelationManager
     public function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([
-            FileUpload::make('image_path')
+            SecureImageUpload::make('image_path')
                 ->label('Imagem')
-                ->image()
-                ->directory('projects')
                 ->imagePreviewHeight('200')
                 ->required(),
         ]);

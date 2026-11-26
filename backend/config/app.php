@@ -55,6 +55,12 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     /*
+    | The only account allowed into the Filament panel (exact match, see
+    | User::canAccessPanel).
+    */
+    'admin_email' => env('ADMIN_EMAIL', 'carolinaribeirodacol@gmail.com'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------

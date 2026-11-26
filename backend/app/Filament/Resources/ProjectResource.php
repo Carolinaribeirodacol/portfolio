@@ -5,7 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers\ImagesRelationManager;
 use App\Models\Project;
-use Filament\Forms\Components\FileUpload;
+use App\Filament\Forms\Components\SecureImageUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -59,10 +59,8 @@ class ProjectResource extends Resource
                     ->url()
                     ->maxLength(255)
                     ->nullable(),
-                FileUpload::make('image')
+                SecureImageUpload::make('image')
                     ->label('Imagem principal')
-                    ->image()
-                    ->directory('projects')
                     ->imagePreviewHeight('200')
                     ->nullable(),
                 Select::make('technologies')

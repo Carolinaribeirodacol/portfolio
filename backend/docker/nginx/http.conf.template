@@ -1,0 +1,93 @@
+# Replaces serversideup/php's /etc/nginx/site-opts.d/http.conf.template
+# (rendered with envsubst at boot by /etc/entrypoint.d/10-init-webserver-config.sh).
+#
+# Differences from upstream, after the 2026-11 incident:
+#   * Upstream's `location ~ \.php$` handed ANY existing .php under public/ to
+#     PHP-FPM, which is how webshells dropped in public/css/... executed.
+#     Here only the front controller runs: `location = /index.php`.
+#   * Every other PHP-ish file (php, php3-8, phtml, pht, phar, phps), anywhere,
+#     returns 404 (not 403: no hint that the file exists).
+#   * /storage/ (public disk) serves static files only, with a CSP that
+#     neutralizes active content (e.g. an SVG with <script>).
+#
+# Keep in sync with upstream when bumping the base image:
+#   docker run --rm --entrypoint cat serversideup/php:8.5-fpm-nginx /etc/nginx/site-opts.d/http.conf.template
+
+listen ${NGINX_HTTP_PORT} default_server;
+listen [::]:${NGINX_HTTP_PORT} default_server;
+
+root $NGINX_WEBROOT;
+
+# index.php here only ever resolves to /index.php at the webroot: a planted
+# public/css/index.php is internally redirected to /css/index.php, which the
+# PHP-ish regex below answers with 404.
+index index.html index.htm index.php;
+
+server_name _;
+
+charset utf-8;
+
+absolute_redirect off;
+
+server_tokens off;
+
+# Healthcheck: PHP-FPM ping (ping.path in the FPM pool), not a PHP script.
+location /healthcheck {
+    access_log off;
+
+    fastcgi_read_timeout 5s;
+
+    include        fastcgi_params;
+    fastcgi_param  SCRIPT_NAME     /healthcheck;
+    fastcgi_param  SCRIPT_FILENAME /healthcheck;
+    fastcgi_pass   127.0.0.1:9000;
+}
+
+# Public disk (storage/app/public via the public/storage symlink): static only.
+# ^~ wins over every regex location below, so nothing here can reach PHP-FPM.
+location ^~ /storage/ {
+    location ~* \.(php\d*|phtml|pht|phar|phps)(/|$) {
+        return 404;
+    }
+
+    try_files $uri =404;
+
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Content-Security-Policy "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; sandbox" always;
+}
+
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
+
+# Redirect /index.php/... to /... (upstream SEO rule, kept as is).
+location ~ ^/index\.php(?<clean_path>/[^/\x5c\s][^\x00-\x1f\x7f]*)$ {
+    if ($request_method !~ ^(?:GET|HEAD)$) {
+        rewrite ^ /index.php last;
+    }
+    return 301 $clean_path$is_args$args;
+}
+
+# The ONLY script PHP-FPM will ever run. `try_files ... /index.php?...` above
+# lands here through an internal redirect.
+location = /index.php {
+    try_files $uri =404;
+    fastcgi_pass   127.0.0.1:9000;
+    fastcgi_index  index.php;
+    fastcgi_param  SCRIPT_FILENAME  $document_root/index.php;
+    include        fastcgi_params;
+    fastcgi_buffers $NGINX_FASTCGI_BUFFERS;
+    fastcgi_buffer_size $NGINX_FASTCGI_BUFFER_SIZE;
+    fastcgi_read_timeout $PHP_MAX_EXECUTION_TIME;
+}
+
+# Any other PHP-ish file, wherever it is: never executed, never downloaded.
+location ~* \.(php\d*|phtml|pht|phar|phps)(/|$) {
+    return 404;
+}
+
+# trusted proxy configuration
+include /etc/nginx/trusted-proxy/${TRUSTED_PROXY}.conf;
+
+# additional config
+include /etc/nginx/server-opts.d/*.conf;
