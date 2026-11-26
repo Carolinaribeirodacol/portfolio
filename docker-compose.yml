@@ -46,12 +46,30 @@ services:
     # uploads vanish on every redeploy.
     volumes:
       - backend-storage:/var/www/html/storage/app
+    # Same runtime hardening to set in Coolify (resource → Advanced → Custom
+    # Docker Options), see backend/SECURITY-INCIDENT-2026-11.md:
+    #   --cap-drop=ALL --security-opt=no-new-privileges --cpus=1 --memory=512m
+    #   --pids-limit=256 --tmpfs /tmp:rw,noexec,nosuid,size=64m
+    #   --tmpfs /dev/shm:rw,noexec,nosuid,size=16m
+    # A future miner can then use at most 1 CPU / 512 MB and cannot run a
+    # binary dropped in /tmp or /dev/shm.
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 256
+    cpus: 1
+    mem_limit: 512m
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+      - /dev/shm:rw,noexec,nosuid,size=16m
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8080/up"]
-      interval: 10s
-      timeout: 5s
+      # /up checks Laravel + DB; the image's own HEALTHCHECK adds security:scan.
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/up >/dev/null && php /var/www/html/artisan security:scan --no-ansi --quiet 2>>/proc/1/fd/2"]
+      interval: 30s
+      timeout: 20s
       start_period: 30s
-      retries: 5
+      retries: 2
     depends_on:
       db:
         condition: service_healthy

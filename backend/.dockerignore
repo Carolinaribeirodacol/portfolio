@@ -28,3 +28,4 @@ phpunit.xml
 .gitattributes
 .gitignore
 README.md
+SECURITY-INCIDENT-*.md
